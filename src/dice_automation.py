@@ -570,7 +570,7 @@ class DiceAutomation:
                                 continue
 
                         if self._click_apply_button():
-                            self._rate_limit_delay(1.5, 2)
+                            self._rate_limit_delay(3.5, 4)
                             if self._handle_application_flow():
                                 self.tracker.add_job(job_id, job_title, company, job_url, "applied")
                                 self.current_stats["jobs_applied"] += 1

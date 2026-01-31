@@ -393,10 +393,10 @@ class DiceAutoApplyApp:
         page.bgcolor = COLORS["background"]
         page.padding = 0
         page.spacing = 0
-        page.window.width = 1100
-        page.window.height = 700
-        page.window.min_width = 900
-        page.window.min_height = 600
+        page.window_width = 1100
+        page.window_height = 700
+        page.window_min_width = 900
+        page.window_min_height = 600
 
         # Ensure directories
         self._ensure_directories()

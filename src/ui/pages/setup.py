@@ -329,13 +329,13 @@ class SetupWizard(ft.UserControl):
         """Go to next step."""
         if self.current_step < self.total_steps - 1:
             self.current_step += 1
-            self.update()
+            self._refresh()
 
     def _prev_step(self, e):
         """Go to previous step."""
         if self.current_step > 0:
             self.current_step -= 1
-            self.update()
+            self._refresh()
 
     def _complete_setup(self, e):
         """Complete the setup wizard."""
@@ -377,40 +377,51 @@ class SetupWizard(ft.UserControl):
 
         self.on_complete(config)
 
+    def _build_content(self) -> ft.Column:
+        """Build the wizard content for the current step."""
+        return ft.Column(
+            [
+                # Step indicator
+                self._create_step_indicator(),
+                ft.Container(height=30),
+                # Step content
+                ft.Container(
+                    content=self._get_step_content(),
+                    expand=True,
+                    alignment=ft.alignment.center,
+                ),
+                # Navigation buttons
+                ft.Row(
+                    [
+                        create_button(
+                            "Back",
+                            on_click=self._prev_step,
+                            primary=False,
+                            disabled=self.current_step == 0,
+                        ) if self.current_step > 0 else ft.Container(),
+                        ft.Container(expand=True),
+                        create_button(
+                            "Complete Setup" if self.current_step == self.total_steps - 1 else "Next",
+                            on_click=self._complete_setup if self.current_step == self.total_steps - 1 else self._next_step,
+                            icon=ft.icons.CHECK if self.current_step == self.total_steps - 1 else ft.icons.ARROW_FORWARD,
+                        ),
+                    ],
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                ),
+            ],
+            expand=True,
+        )
+
+    def _refresh(self):
+        """Refresh wizard UI after step changes."""
+        if hasattr(self, "root") and self.root:
+            self.root.content = self._build_content()
+        self.update()
+
     def build(self):
-        return ft.Container(
-            content=ft.Column(
-                [
-                    # Step indicator
-                    self._create_step_indicator(),
-                    ft.Container(height=30),
-                    # Step content
-                    ft.Container(
-                        content=self._get_step_content(),
-                        expand=True,
-                        alignment=ft.alignment.center,
-                    ),
-                    # Navigation buttons
-                    ft.Row(
-                        [
-                            create_button(
-                                "Back",
-                                on_click=self._prev_step,
-                                primary=False,
-                                disabled=self.current_step == 0,
-                            ) if self.current_step > 0 else ft.Container(),
-                            ft.Container(expand=True),
-                            create_button(
-                                "Complete Setup" if self.current_step == self.total_steps - 1 else "Next",
-                                on_click=self._complete_setup if self.current_step == self.total_steps - 1 else self._next_step,
-                                icon=ft.icons.CHECK if self.current_step == self.total_steps - 1 else ft.icons.ARROW_FORWARD,
-                            ),
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                    ),
-                ],
-                expand=True,
-            ),
+        self.root = ft.Container(
+            content=self._build_content(),
             padding=40,
             expand=True,
         )
+        return self.root
