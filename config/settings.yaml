@@ -1,0 +1,34 @@
+data:
+  applied_jobs_file: data/applied_jobs.json
+filters:
+  distance: No Preference
+  easy_apply_only: true
+  employment_type:
+  - Contract
+  job_title: Python Developer
+  posted_date: No Preference
+  remote_option:
+  - Remote
+  - Hybrid
+  - On-Site
+logging:
+  log_file: logs/application.log
+  log_level: INFO
+login:
+  email: adithyas36901@gmail.com
+  use_keyring: true
+preferences:
+  headless: false
+  max_jobs: 3
+  max_pages: 1
+  retry_attempts: 3
+rate_limiting:
+  max_delay: 5
+  min_delay: 2
+  page_load_delay: 3
+schedule:
+  enabled: false
+  hour: 5
+  minute: 0
+  os_scheduler: true
+  run_on_startup: false
