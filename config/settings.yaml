@@ -5,7 +5,8 @@ filters:
   easy_apply_only: true
   employment_type:
   - Contract
-  job_title: Python Developer
+  - Full-time
+  job_title: AI Engineer
   posted_date: No Preference
   remote_option:
   - Remote
@@ -15,11 +16,11 @@ logging:
   log_file: logs/application.log
   log_level: INFO
 login:
-  email: adithyas36901@gmail.com
+  email: adithyas042@gmail.com
   use_keyring: true
 preferences:
   headless: false
-  max_jobs: 3
+  max_jobs: 50
   max_pages: 1
   retry_attempts: 3
 rate_limiting:
